@@ -1,4 +1,12 @@
 {
+  "compilerOptions": {
+    "lib": [
+      "dom"
+    ],
+    "types": [
+      "vue"
+    ]
+  },
   "files": [],
   "references": [
     {
