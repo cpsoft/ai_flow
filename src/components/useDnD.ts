@@ -1,18 +1,16 @@
 import { useVueFlow } from '@vue-flow/core'
 import { ref, watch } from 'vue'
-import type { DragEvent as NativeDragEvent } from 'dom'
+import type { DragEvent } from 'dom'
 
-let id = 0
 
-function getId() {
-    return `dndnode_${id++}`
-}
 
 const state = {
     draggedType: ref<string | undefined>(undefined), // 正在拖动的节点类型
     isDragOver: ref(false), // 是否有节点在上面
     isDragging: ref(false), // 是否正在拖动 
 }
+
+let id = 0
 
 export default function useDragAndDrop() {
     const { draggedType, isDragOver, isDragging } = state
@@ -22,12 +20,15 @@ export default function useDragAndDrop() {
         document.body.style.userSelect = dragging ? 'none' : ''
     })
 
+    function getId() {
+        return `${draggedType.value}_${id++}`
+    }
+
     function onDragStart(event: DragEvent, type: string) {
         if (event.dataTransfer) {
             event.dataTransfer.setData('application/vueflow', type)
             event.dataTransfer.effectAllowed = 'move'
         }
-        console.log('onDragStart', type)
         draggedType.value = type
         isDragging.value = true
 
@@ -68,8 +69,6 @@ export default function useDragAndDrop() {
             position,
             data: { label: nodeId },
         }
-
-        console.log('New Node: ', newNode)
 
         const { off } = onNodesInitialized(() => {
             updateNode(nodeId, (node) => ({

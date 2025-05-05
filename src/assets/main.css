@@ -32,6 +32,14 @@ a,
   height: 100%;
 }
 
+/* Nodes 连线具柄 */
+.vue-flow__handle {
+  background-color:#ec4899;
+  height:30px;
+  width:10px;
+  border-radius:4px
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
